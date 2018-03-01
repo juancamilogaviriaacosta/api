@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+
 @RestController
 public class ApiController {
 
@@ -62,5 +63,18 @@ public class ApiController {
 			@ApiResponse(code = 404, message = "No encontrado") })
 	public String modificarCliente(String token, Cliente c) {
 		return "SUCCESSFUL";
+	}
+	
+	@GetMapping("/getBEPSoap")
+	@ApiOperation(value = "getBEPSoap", notes = "getBEPSoap en el sistema")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Token activo"),
+			@ApiResponse(code = 401, message = "No autorizado"),
+			@ApiResponse(code = 403, message = "Excepcion controlada de por el sistema"), 
+			@ApiResponse(code = 404, message = "No encontrado") })
+	public String getBEPSoap(double fixedCost, double variableCost, double returnsPerUnit) {
+		SoapSupport ss = new SoapSupport();
+		String resp = ss.getBreakEvenPointResult(fixedCost, variableCost, returnsPerUnit);
+		return resp;
 	}
 }
