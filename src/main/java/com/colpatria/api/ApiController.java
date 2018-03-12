@@ -35,8 +35,8 @@ public class ApiController {
 			@ApiResponse(code = 404, message = "No encontrado") })
 	public Cliente consultaCliente(String token, String identificacion) {
 		Cliente c = new Cliente();
-		c.setNombre("Juan");
-		c.setApellido("Gaviria");
+		c.setNombres("Juan");
+		c.setApellidos("Gaviria");
 		c.setIdentificacion(identificacion);
 		return c;
 	}
