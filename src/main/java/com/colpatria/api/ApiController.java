@@ -1,12 +1,15 @@
 package com.colpatria.api;
 
 import java.util.UUID;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.colpatria.api.entidades.Cliente;
+import com.colpatria.api.wsdl.ListOfListOfValuesType;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -75,6 +78,19 @@ public class ApiController {
 	public String getBEPSoap(double fixedCost, double variableCost, double returnsPerUnit) {
 		SoapSupport ss = new SoapSupport();
 		String resp = ss.getBreakEvenPointResult(fixedCost, variableCost, returnsPerUnit);
+		return resp;
+	}
+	
+	@GetMapping("/customerListOfValuesQuery")
+	@ApiOperation(value = "customerListOfValuesQuery", notes = "customerListOfValuesQuery en el sistema")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Token activo"),
+			@ApiResponse(code = 401, message = "No autorizado"),
+			@ApiResponse(code = 403, message = "Excepcion controlada de por el sistema"), 
+			@ApiResponse(code = 404, message = "No encontrado") })
+	public ListOfListOfValuesType customerListOfValuesQuery(String transactionId, String serviceCode, String operationCode, String requestUser, String requestSystem, String channel, String host, String executionMode, String operationCountry, String operationBank, String transactionDate, String transactionTime, String officeCode, String numberPages, String totalPages, String institutionCode, String username, String password, String querylistofvaluesType) {
+		SoapSupport ss = new SoapSupport();
+		ListOfListOfValuesType resp = ss.customerListOfValuesQuery(transactionId, serviceCode, operationCode, requestUser, requestSystem, channel, host, executionMode, operationCountry, operationBank, transactionDate, transactionTime, officeCode, numberPages, totalPages, institutionCode, username, password, querylistofvaluesType);
 		return resp;
 	}
 }
